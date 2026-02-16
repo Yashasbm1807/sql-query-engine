@@ -1,0 +1,6 @@
+S = ['cust','max_ny_quant','sum_ct_quant','min_nj_quant','count_z_quant']
+P = {'0': ["'year'=2020 and 'prod'<>'Butter'"],'ny':["'ny.cust'='cust' and 'state'='NY'"] ,'nj':["('nj.cust'='cust') and 'state'='NJ'"],'ct':["'ct.cust'='cust' and 'state'='CT'"], 'z': ["'quant'>400 and 'state'='NJ'"]}
+V = ['cust']
+F = ['count_z_quant','min_nj_quant','max_ny_quant','sum_ct_quant']
+n = 3
+H = []

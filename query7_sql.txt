@@ -1,0 +1,42 @@
+/* ----  0‑level filtering (P[0])  ------------------------------------- */
+WITH base AS (
+    SELECT *
+    FROM   sales
+    WHERE  cust IN ('Sam','Claire','Helen')
+      AND  prod IN ('Butter','Dates')
+),
+
+/* ----  aggregates on (cust , prod)  ---------------------------------- */
+grp AS (
+    SELECT
+        cust ,
+        prod ,
+        COUNT(CASE WHEN state = 'NY'               THEN 1 END) AS count_ny_quant ,
+        AVG  (CASE WHEN state IN ('NY','CT')       THEN quant END) AS avg_nyOrCt_quant
+    FROM base
+    GROUP BY cust , prod
+)
+
+/* ----  final query --------------------------------------------------- */
+SELECT
+    g.cust ,
+    g.prod ,
+    g.count_ny_quant ,
+    g.avg_nyOrCt_quant ,
+    SUM(b.quant)                                              AS sum_ct_quant ,
+
+    /* ⬇︎ NEW COLUMN ⬇︎ */
+    SUM(b.quant)
+/ NULLIF(g.count_ny_quant * g.avg_nyOrCt_quant, 0)            AS ratio_ct_to_ny_avg
+FROM   grp  AS g
+JOIN   base AS b
+       ON  b.prod  = g.prod
+      AND b.cust <> g.cust
+      AND b.state = 'CT'
+      AND b.cust IN ('Helen','Sam')
+      AND b.quant > 1.2 * g.avg_nyOrCt_quant
+GROUP  BY
+    g.cust ,
+    g.prod ,
+    g.count_ny_quant ,
+    g.avg_nyOrCt_quant;

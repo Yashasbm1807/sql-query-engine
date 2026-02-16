@@ -1,0 +1,6 @@
+S = ['cust','prod','count_ny_quant','avg_nyOrCt_quant','sum_ct_quant', 'sum_ct_quant/(count_ny_quant*(avg_nyOrCt_quant))']
+P = {'0': ["('cust'='Sam' or 'cust'='Claire' or 'cust'='Helen') and ('prod'='Butter' or 'prod'='Dates')"],'nyOrCt':["('state'='NY' or 'state'='CT')"] ,'ny':["('state'='NY')"],'ct':["('ct.cust'<>'cust' and 'ct.prod'='prod' and 'state'='CT') and ('cust'='Helen' or 'cust'='Sam') and ('quant'>'1.2*avg_nyOrCt_quant')"]}
+V = ['cust','prod']
+F = ['count_ny_quant','avg_nyOrCt_quant','sum_ct_quant']
+n = 3
+H = ["((('count_ny_quant'>'avg_nyOrCt_quant' or 'count_ny_quant'<490) and ('sum_ct_quant'<'avg_nyOrCt_quant*3.3*count_ny_quant')))"]

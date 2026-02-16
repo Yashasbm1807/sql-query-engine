@@ -1,0 +1,37 @@
+WITH
+ny AS (
+    SELECT cust, MAX(quant) AS max_ny_quant
+    FROM Sales
+    WHERE year = 2020 AND prod <> 'Butter' AND state = 'NY'
+    GROUP BY cust
+),
+ct AS (
+    SELECT cust, SUM(quant) AS sum_ct_quant
+    FROM Sales
+    WHERE year = 2020 AND prod <> 'Butter' AND state = 'CT'
+    GROUP BY cust
+),
+nj AS (
+    SELECT cust, MIN(quant) AS min_nj_quant
+    FROM Sales
+    WHERE year = 2020 AND prod <> 'Butter' AND state = 'NJ'
+    GROUP BY cust
+),
+z AS (
+    SELECT cust, COUNT(*) AS count_z_quant
+    FROM Sales
+    WHERE year = 2020 AND prod <> 'Butter' AND state = 'NJ' AND quant > 400
+    GROUP BY cust
+)
+SELECT
+    s.cust,
+    ny.max_ny_quant,
+    ct.sum_ct_quant,
+    nj.min_nj_quant,
+    z.count_z_quant
+FROM (SELECT DISTINCT cust FROM Sales WHERE year = 2020 AND prod <> 'Butter') s
+LEFT JOIN ny ON s.cust = ny.cust
+LEFT JOIN ct ON s.cust = ct.cust
+LEFT JOIN nj ON s.cust = nj.cust
+LEFT JOIN z ON s.cust = z.cust
+ORDER BY s.cust;

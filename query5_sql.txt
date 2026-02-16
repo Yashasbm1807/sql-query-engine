@@ -1,0 +1,32 @@
+WITH prev_avg AS (
+    SELECT prod, month + 1 AS target_month, AVG(quant) AS avg_prev
+    FROM Sales
+	where year=2020
+    GROUP BY prod, month + 1
+),
+next_avg AS (
+    SELECT prod, month - 1 AS target_month, AVG(quant) AS avg_next
+    FROM Sales
+	where year=2020
+    GROUP BY prod, month - 1
+),
+z_rows AS (
+    SELECT prod, month, quant
+    FROM Sales
+	where year=2020
+)
+
+SELECT 
+    z.prod,
+    z.month,
+    COUNT(*) AS count_z
+FROM z_rows z
+LEFT JOIN prev_avg pa
+    ON z.prod = pa.prod AND z.month = pa.target_month
+LEFT JOIN next_avg na
+    ON z.prod = na.prod AND z.month = na.target_month
+WHERE 
+    z.quant > pa.avg_prev
+    AND z.quant < na.avg_next
+GROUP BY z.prod, z.month
+ORDER BY z.prod, z.month;

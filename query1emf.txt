@@ -1,0 +1,6 @@
+S = ['cust','avg_ny_quant','avg_ct_quant','avg_nj_quant','100*(avg_ny_quant/avg_nj_quant)','100*(avg_ny_quant/avg_ct_quant)']
+P = {'0': ["'year'=2019"],'ny':["'ny.cust'='cust' and 'state'='NY'"] ,'nj':["('nj.cust'='cust') and 'state'='NJ'"],'ct':["'ct.cust'='cust' and 'state'='CT'"]}
+V = ['cust']
+F = ['avg_ny_quant','avg_nj_quant','avg_ct_quant']
+n = 3
+H = ["'avg_ny_quant'>'avg_nj_quant' or 'avg_ny_quant'>'avg_ct_quant'"]

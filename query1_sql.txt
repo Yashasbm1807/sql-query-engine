@@ -1,0 +1,13 @@
+SELECT
+    cust,
+    AVG(CASE WHEN state = 'NY' THEN quant END) AS avg_ny,
+    AVG(CASE WHEN state = 'CT' THEN quant END) AS avg_ct,
+    AVG(CASE WHEN state = 'NJ' THEN quant END) AS avg_nj
+FROM Sales
+WHERE year = 2019
+GROUP BY cust
+HAVING
+    AVG(CASE WHEN state = 'NY' THEN quant END) > AVG(CASE WHEN state = 'CT' THEN quant END)
+    OR
+    AVG(CASE WHEN state = 'NY' THEN quant END) > AVG(CASE WHEN state = 'NJ' THEN quant END)
+Order by cust;

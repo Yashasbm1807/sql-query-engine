@@ -1,0 +1,6 @@
+S = ['prod','quant', 'count_x_quant/(2*count_y_quant)']
+P = {'0': ["'year'=2019"],'x':["'x.prod'='prod'"] ,'y':["'y.prod'='prod' and 'y.quant'<'quant'"]}
+V = ['prod','quant']
+F = ['count_x_quant','count_y_quant']
+n = 3
+H = ["'count_y_quant'='count_x_quant/2' or 'count_y_quant'='(count_x_quant-1)/2'"]

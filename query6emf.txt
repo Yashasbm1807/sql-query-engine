@@ -1,0 +1,6 @@
+S = [ 'cust', 'prod', 'avg_x_quant', 'avg_y_quant']
+P = {'0': [], 'x':["'x.cust'='cust' and 'x.prod'='prod'"], 'y':["'y.cust'<>'cust' and 'y.prod'='prod'"]}
+V = [ 'cust', 'prod']
+F = ['avg_x_quant', 'avg_y_quant']
+n=3
+H=[]

@@ -1,0 +1,22 @@
+WITH
+x AS (
+    SELECT prod, quant
+    FROM Sales
+	where year=2019
+),
+y AS (
+    SELECT prod, quant
+    FROM Sales
+	where year=2019
+)
+
+SELECT 
+    s.prod,
+    s.quant
+FROM Sales s
+WHERE s.prod IS NOT NULL and s.year=2019
+GROUP BY s.prod, s.quant
+HAVING 
+    (SELECT COUNT(*) FROM y WHERE y.prod = s.prod AND y.quant < s.quant) = 
+    (SELECT COUNT(*) FROM x WHERE x.prod = s.prod) / 2
+ORDER BY s.prod, s.quant;

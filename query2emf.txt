@@ -1,0 +1,6 @@
+S = ['cust','month','avg_1_quant','avg_3_quant','avg_2_quant']
+P = {'0': ["('cust'='Boo' or 'cust'='Claire') and 'year'=2019"],'1':["'1.cust'='cust' and '1.month'<'month'"], '3':[],'2':["'2.cust'='cust' and '2.month'>'month'"]}
+V = ['cust','month']
+F = ['avg_1_quant','avg_3_quant','avg_2_quant']
+n = 2
+H = ["'avg_1_quant'>0 and 'avg_2_quant'>0"]

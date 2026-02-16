@@ -1,0 +1,6 @@
+S = ['prod','month','count_z_cust']
+P = {'0': ["'year'=2020"],'x':["'x.prod'='prod' and 'x.month'='month-1'"],'y':["'y.prod'='prod' and 'y.month'='month+1'"],'z':["'z.prod'='prod' and 'z.month'='month' and 'quant'>'avg_x_quant' and 'quant'<'avg_y_quant'"]}
+V = ['prod','month']
+F = ['count_z_cust','avg_x_quant','avg_y_quant']
+n = 3
+H = ["'avg_x_quant'>0 and 'count_z_cust'>0"]

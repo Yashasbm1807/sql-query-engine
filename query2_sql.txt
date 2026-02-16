@@ -1,0 +1,15 @@
+SELECT
+    s.cust,
+    s.month,
+    AVG(x.quant) AS avg_x_quant,
+    AVG(s.quant) AS avg_quant,
+    AVG(y.quant) AS avg_y_quant
+FROM Sales s
+LEFT JOIN Sales x 
+    ON x.cust = s.cust AND x.month < s.month AND x.year = 2019
+LEFT JOIN Sales y 
+    ON y.cust = s.cust AND y.month > s.month AND y.year = 2019
+WHERE s.year = 2019
+  AND (s.cust = 'Boo' OR s.cust = 'Claire')
+GROUP BY s.cust, s.month
+ORDER BY s.cust, s.month;

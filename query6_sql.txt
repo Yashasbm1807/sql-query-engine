@@ -1,0 +1,34 @@
+WITH base AS (
+    SELECT DISTINCT cust, prod
+    FROM Sales
+),
+x_avg AS (
+    SELECT
+        s.cust AS group_cust,
+        s.prod AS group_prod,
+        AVG(s.quant) AS avg_x_quant
+    FROM Sales s
+    GROUP BY s.cust, s.prod
+),
+y_avg AS (
+    SELECT
+        b.cust AS group_cust,
+        b.prod AS group_prod,
+        AVG(s.quant) AS avg_y_quant
+    FROM Sales s
+    JOIN base b
+        ON s.prod = b.prod
+       AND s.cust <> b.cust
+    GROUP BY b.cust, b.prod
+)
+SELECT
+    b.cust,
+    b.prod,
+    COALESCE(x.avg_x_quant, 0) AS avg_x_quant,
+    COALESCE(y.avg_y_quant, 0) AS avg_y_quant
+FROM base b
+LEFT JOIN x_avg x
+    ON x.group_cust = b.cust AND x.group_prod = b.prod
+LEFT JOIN y_avg y
+    ON y.group_cust = b.cust AND y.group_prod = b.prod
+ORDER BY b.cust, b.prod;
